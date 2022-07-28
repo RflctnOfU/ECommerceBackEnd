@@ -1,7 +1,7 @@
 {
-  "name": "module-13-challenge-orm",
+  "name": "e-commerce_back_end",
   "version": "1.0.0",
-  "description": "",
+  "description": "A back end for an ecommerce app",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,7 +14,7 @@
     "url": "git@work.github.com:coding-boot-camp/module-13-challenge-orm.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kris Marshall",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.3"
