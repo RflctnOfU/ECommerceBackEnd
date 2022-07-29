@@ -5,7 +5,7 @@ router.get('/', async (req, res) => {
   // Find all products
   try {
     const productData = await Product
-      .findAll({ include: [Category, Tag] });
+      .findAll({ include: [{ model: Category }, { model: Tag }] });
     res.status(200).json(productData);
   } catch (err) {
     res.status(400).json(err);
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   // Find product by ID
   try {
-    const productData = await Product.findByPk(req.params.id, { include: [Category, Tag] });
+    const productData = await Product.findByPk(req.params.id, { include: [{ model: Category }, { model: Tag }] });
     res.status(200).json(productData);
   } catch (err) {
     res.status(400).json(err);
