@@ -1,12 +1,8 @@
 const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
-// The `/api/products` endpoint
-
-// get all products
 router.get('/', async (req, res) => {
-  // find all products
-  // be sure to include its associated Category and Tag data
+  // Find all products
   try {
     const productData = await Product
       .findAll({ include: [Category, Tag] });
@@ -16,10 +12,9 @@ router.get('/', async (req, res) => {
   }
 });
 
-// get one product
+
 router.get('/:id', async (req, res) => {
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+  // Find product by ID
   try {
     const productData = await Product.findByPk(req.params.id, { include: [Category, Tag] });
     res.status(200).json(productData);
@@ -28,14 +23,14 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// create new product
+// Create new product
 router.post('/', (req, res) => {
   /* req.body should look like this...
     {
-      product_name: "Basketball",
-      price: 200.00,
-      stock: 3,
-      tagIds: [1, 2, 3, 4]
+      "product_name": "Basketball",
+      "price": 200.00,
+      "stock": 3,
+      "tagIds": [1, 2, 3, 4]
     }
   */
   Product.create(req.body)
@@ -60,7 +55,7 @@ router.post('/', (req, res) => {
     });
 });
 
-// update product
+// Update product by ID
 router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
@@ -102,14 +97,18 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
-  // delete one product by its `id` value
-  Product.destroy({
-    where: {
-      id: req.params.id
-    }
-  })
-  res.status(200).json({ message: 'Product removal successful!' })
+router.delete('/:id', async (req, res) => {
+  // Remove product by ID
+  try {
+    const removeProduct = await Product.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    res.status(200).json(removeProduct)
+  } catch (error) {
+    res.status(400).json({ message: 'Product removal unsuccessful!' });
+  }
 });
 
 module.exports = router;
